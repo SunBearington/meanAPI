@@ -1,13 +1,19 @@
+//Declare libraries
 var express = require('express');
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var passport-jwt = require('passport-jwt');
 
+//Initial routes set up by express
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+//Initialize app
 var app = express();
 
 // view engine setup
