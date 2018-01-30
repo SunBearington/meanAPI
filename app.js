@@ -1,23 +1,33 @@
-//Declare libraries
-var express = require('express');
-var path = require('path');
-var favicon = require('static-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+var express = require('express');                                                       //Declare libraries
+var path = require('path');                                                             //
+var favicon = require('static-favicon');                                                //
+var logger = require('morgan');                                                         //
+var cookieParser = require('cookie-parser');                                            //
+var bodyParser = require('body-parser');                                                //
+var mongoose = require('mongoose');                                                     //
 var passport = require('passport');
-var passport-jwt = require('passport-jwt');
+var config = require('./config/database');
 
-//Initial routes set up by express
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var routes = require('./routes/index');                                                 //Declare Routes
+var users = require('./routes/users');                                                  //
+var api  =require('./routes/api);                                                       //
 
-//Initialize app
-var app = express();
+try{
+    mongoose.connect(config.database);
+}
+catch(err){
+    console.log(err.message);
+}
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
+var app = express();                                                                    //Initialize app
+app.use(function(req,res,next){
+  res.header("Access-Control-Allow-Origin",*);
+  res.header("Access-Control-Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
+  next();
+})
+
+
+app.set('views', path.join(__dirname, 'views'));                                        // view engine setup
 app.set('view engine', 'jade');
 
 app.use(favicon());
