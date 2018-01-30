@@ -1,5 +1,5 @@
-var express = require('express');                                                       //Declare libraries
-var path = require('path');                                                             //
+var express = require('express');                                                       //Declare
+var path = require('path');                                                             //Libraries
 var favicon = require('static-favicon');                                                //
 var logger = require('morgan');                                                         //
 var cookieParser = require('cookie-parser');                                            //
@@ -8,9 +8,9 @@ var mongoose = require('mongoose');                                             
 var passport = require('passport');
 var config = require('./config/database');
 
-var routes = require('./routes/index');                                                 //Declare Routes
-var users = require('./routes/users');                                                  //
-var api  =require('./routes/api);                                                       //
+var routes = require('./routes/index');                                                 //Declare
+var users = require('./routes/users');                                                  //Routes
+var api  =require('./routes/api');                                                       //
 
 try{
     mongoose.connect(config.database);
@@ -21,10 +21,11 @@ catch(err){
 
 var app = express();                                                                    //Initialize app
 app.use(function(req,res,next){
-  res.header("Access-Control-Allow-Origin",*);
+  res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
   next();
 })
+app.use(passport.initialize());
 
 
 app.set('views', path.join(__dirname, 'views'));                                        // view engine setup
@@ -37,8 +38,12 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+//app.use('/', routes);
+//app.use('/users', users);
+app.use('/api',api);
+app.get('/',function(req,res){
+    res.send('<h1>Page Under Construction</h1>');
+});
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
