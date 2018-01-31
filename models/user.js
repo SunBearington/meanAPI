@@ -21,18 +21,24 @@ var UserSchema = new mongoose.Schema({
     timestamps:true
 });
 
-UserSchema.pre('save',function(next){
-    var user=this;
+UserSchema.pre('save',function(next) {
+    var user = this;
     var SALT_FACTOR = 5;
-    if(!user.isModified('password')){
+    if (!user.isModified('password')) {
         return next();
     }
-    bycrypt.genSalt(SALT_FACTOR,function(err,salt){
-        if(err){
+
+    bycrypt.genSalt(SALT_FACTOR, function (err, salt) {
+        if (err) {
             return next(err);
         }
-        user.password = hash;
-        next()
+        bycrypt.hash(user.password, salt, null, function (err, hash) {
+            if (err) {
+                return next(err);
+            }
+            user.password = hash;
+            next();
+        });
     });
 });
 

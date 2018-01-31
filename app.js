@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');                                        
 var mongoose = require('mongoose');                                                     //
 var passport = require('passport');
 var config = require('./config/database');
-
+var debug = require('debug')('myapi:server');
 var routes = require('./routes/index');                                                 //Declare
 var users = require('./routes/users');                                                  //Routes
 var api  =require('./routes/api');                                                       //
